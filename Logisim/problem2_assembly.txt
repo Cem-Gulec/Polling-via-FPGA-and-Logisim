@@ -1,0 +1,69 @@
+.data
+	SIXH:1536
+	SIXT:96
+	TEN:10
+	SIX:6
+.code
+        ldi 7 450
+        ldi 6 0x0
+	ldi 3 0x0
+loop1    ldi 0 0xc00
+        ldi 1 0xa01
+        ld 1 1
+        ldi 5 1
+        and 5 5 1
+        jz loop2
+        ldi 2 0xa00
+        ld 2 2
+	add 3 3 2
+        call print
+	jmp loop1
+loop2   ldi 1 0xb01
+        ld 1 1
+        ldi 5 1
+        and 5 5 1
+        jz loop1
+	ldi 2 0xb00
+	ld 2 2
+	mov 5 2
+	ldi 4 0x0
+loop3	add 4 4 5
+	dec 2
+	jz end
+	jmp loop3
+end	add 3 3 4
+	call print
+	jmp loop1
+print	ldi 1 0x0
+	mov 2 3
+	ldi 4 0xA
+	ldi 5 0xA
+	ldi 6 0xA
+loop4	inc 1
+	dec 4
+	jz addsix
+back1	dec 2
+	jz ps
+	jmp loop4
+addsix	ldi 4 0x6
+	add 1 1 4
+	ldi 4 0xA
+	dec 5
+	jz sixteen
+	jmp back1
+sixteen	ldi 5 SIXT
+	ld 5 5
+	add 1 1 5
+	ldi 5 TEN
+	ld 5 5
+	dec 6
+	jz sixh
+	jmp back1
+sixh	ldi 6 SIXH
+	ld 6 6
+	add 1 1 6
+	ldi 6 TEN
+	ldi 6 6
+	jmp back1
+ps	st 0 1
+	ret
