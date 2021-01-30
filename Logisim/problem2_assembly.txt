@@ -1,8 +1,3 @@
-.data
-	SIXH:1536
-	SIXT:96
-	TEN:10
-	SIX:6
 .code
         ldi 7 450
         ldi 6 0x0
@@ -51,19 +46,15 @@ addsix	ldi 4 0x6
 	dec 5
 	jz sixteen
 	jmp back1
-sixteen	ldi 5 SIXT
-	ld 5 5
+sixteen	ldi 5 0x60
 	add 1 1 5
-	ldi 5 TEN
-	ld 5 5
+	ldi 5 0xa
 	dec 6
 	jz sixh
 	jmp back1
-sixh	ldi 6 SIXH
-	ld 6 6
+sixh	ldi 6 0x600
 	add 1 1 6
-	ldi 6 TEN
-	ldi 6 6
+	ldi 6 0xa
 	jmp back1
 ps	st 0 1
 	ret
