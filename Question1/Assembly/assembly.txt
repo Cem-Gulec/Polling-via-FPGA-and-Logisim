@@ -1,0 +1,99 @@
+.data
+    KEYPAD_DATA: 0x900
+    KEYPAD_STATUS: 0x901
+    SEVENSEG: 0xb00
+    SIXT: 96
+    TEN: 10
+.code
+	ldi 0 0x0
+	ldi 2 0x0
+	ldi 3 0x0
+	ldi 4 0x0
+	ldi 5 0x0
+main	ldi 0 KEYPAD_STATUS
+	ld  0 0
+	ld  0 0
+	ldi 1 0x1
+	and 1 1 0
+	jz main
+	ldi 0 KEYPAD_DATA
+	ld 0 0
+	ld 0 0
+	ldi 1 0xe
+	sub 1 0 1
+	jz caller1
+	ldi 1 0xf
+	sub 1 0 1
+	jz caller2
+	mov 3 0
+	call pnumb
+	jmp main
+caller1	ldi 0 0x0
+	call mult
+	mov 2 0
+	call print
+	jmp main
+caller2	call addit
+	call print
+	ldi 3 0x0
+	jmp main
+mult	add 0 0 2
+	dec 3
+	jz return
+	jmp mult
+addit	add 2 2 3
+	ret
+print	ldi 1 0x0
+	mov 3 2
+	ldi 4 0xA
+	ldi 5 0xA
+loop1	inc 1
+	dec 4
+	jz addsix
+back1	dec 3
+	jz ps
+	jmp loop1
+addsix	ldi 4 0x6
+	add 1 1 4
+	ldi 4 0xA
+	dec 5
+	jz sixteen
+	jmp back1
+sixteen	ldi 5 SIXT
+	ld 5 5
+	add 1 1 5
+	ldi 5 TEN
+	ld 5 5
+	jmp back1
+ps	ldi 0 SEVENSEG
+	ld 0 0
+	st 0 1
+	ret
+pnumb	ldi 0 0x0
+	mov 1 3
+	ldi 4 0xA
+	ldi 5 0xA
+loop2	inc 0
+	dec 4
+	jz addsix2
+back2	dec 1
+	jz ps2
+	jmp loop2
+addsix2	ldi 4 0x6
+	add 1 1 4
+	ldi 4 0xA
+	dec 5
+	jz addnx2
+	jmp back2
+addnx2	ldi 5 SIXT
+	ld 5 5
+	add 1 1 5
+	ldi 5 TEN
+	ld 5 5
+	jmp back2
+ps2	ldi 1 SEVENSEG
+	ld 1 1
+	st 1 0
+	ret
+return ret
+finish jmp finish
